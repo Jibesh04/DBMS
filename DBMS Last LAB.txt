@@ -1,0 +1,184 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use CSE2102040024;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_cse2102040024 |
++-------------------------+
+| course                  |
+| department              |
+| enrollment              |
+| faculty                 |
+| prerequisite            |
+| student                 |
+| teaching                |
++-------------------------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(1001, "Architecture", 1980, "D-300", 5000000, "Dr. B Mohapatra"), (1002, "Chemical Engineering", 2000, "A-300", 6000000, "Dr. P C Jena"), (1004, "Civil Engineering", 1960, "CE300", 10000000, "Prof. R R Dash"), (1006, "Comp Sc. & Engg.", 1990, "CS200", 7000000, "Dr. S Panigrahi"), (1009, "Electronics & Telecom. Engg.", 1998, "D-200", 8000000, "Prof. H K Sahoo");
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM department;
++---------+------------------------------+-----------+-------------+----------+-----------------+
+| dept_ID | dept_name                    | estd_year | building_no | budget   | HOD             |
++---------+------------------------------+-----------+-------------+----------+-----------------+
+| 1001    | Architecture                 | 1980      | D-300       |  5000000 | Dr. B Mohapatra |
+| 1002    | Chemical Engineering         | 2000      | A-300       |  6000000 | Dr. P C Jena    |
+| 1004    | Civil Engineering            | 1960      | CE300       | 10000000 | Prof. R R Dash  |
+| 1006    | Comp Sc. & Engg.             | 1990      | CS200       |  7000000 | Dr. S Panigrahi |
+| 1009    | Electronics & Telecom. Engg. | 1998      | D-200       |  8000000 | Prof. H K Sahoo |
++---------+------------------------------+-----------+-------------+----------+-----------------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO FACULTY VALUES(2001, "Prof. A K Rath", "MALE", '2014-07-11', 1006, 9437577560, "amiyaamiya@rediffmail.com"), (2002, "Prof. M R Kabat", "MALE", '2001-09-05', 1006, 9861173326, "manas_kabat@yahoo.com"), (2003, "Dr. R Mohanty", "MALE", '2001-09-01', 1006, 7008585072, "rmohanty_cse@vssut.ac.in"), (2006, "Dr. S K Majhi", "MALE", "2015-05-18", 1006, 9438403651, "smajhi_cse@vssut.ac.in"), (2008, "Dr. S Behera", "FEMALE", "2015-06-20", 1006, 7504017604, "b.santibehera@gmail.com");
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM faculty;
++-------------+-----------------+--------+-------------+-------------+--------------+---------------------------+
+| employee_ID | employee_name   | gender | date_joined | dept_number | phone_number | email_ID                  |
++-------------+-----------------+--------+-------------+-------------+--------------+---------------------------+
+| 2001        | Prof. A K Rath  | MALE   | 2014-07-11  | 1006        | 9437577560   | amiyaamiya@rediffmail.com |
+| 2002        | Prof. M R Kabat | MALE   | 2001-09-05  | 1006        | 9861173326   | manas_kabat@yahoo.com     |
+| 2003        | Dr. R Mohanty   | MALE   | 2001-09-01  | 1006        | 7008585072   | rmohanty_cse@vssut.ac.in  |
+| 2006        | Dr. S K Majhi   | MALE   | 2015-05-18  | 1006        | 9438403651   | smajhi_cse@vssut.ac.in    |
+| 2008        | Dr. S Behera    | FEMALE | 2015-06-20  | 1006        | 7504017604   | b.santibehera@gmail.com   |
++-------------+-----------------+--------+-------------+-------------+--------------+---------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT f.employee_name, d.dept_name FROM FACULTY f, DEPARTMENT d
+    -> WHERE f.dept_number = d.dept_ID;
++-----------------+------------------+
+| employee_name   | dept_name        |
++-----------------+------------------+
+| Prof. A K Rath  | Comp Sc. & Engg. |
+| Prof. M R Kabat | Comp Sc. & Engg. |
+| Dr. R Mohanty   | Comp Sc. & Engg. |
+| Dr. S K Majhi   | Comp Sc. & Engg. |
+| Dr. S Behera    | Comp Sc. & Engg. |
++-----------------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES (2102040001, "Prerit Agrawal", "B Tech", 2021, "MALE", 1006, 2006), (2102040002, "Gobinda Panda", "B Tech", 2021, "MALE", 1006, 2008), (2102040003, "Nikunj Agrawal", "B Tech", 2021, "MALE", 1006, 2002), (2102040004, "Jyotiprakash Panda", "B Tech", 2021, "MALE", 1006, 2003), (2102040005, "S Priyadarshan", "B Tech", 2021, "MALE", 1006, 2001);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM student;
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+| roll_number | name               | degree | admission_year | gender | dept_number | advisor |
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+| 2102040001  | Prerit Agrawal     | B Tech | 2021           | MALE   | 1006        | 2006    |
+| 2102040002  | Gobinda Panda      | B Tech | 2021           | MALE   | 1006        | 2008    |
+| 2102040003  | Nikunj Agrawal     | B Tech | 2021           | MALE   | 1006        | 2002    |
+| 2102040004  | Jyotiprakash Panda | B Tech | 2021           | MALE   | 1006        | 2003    |
+| 2102040005  | S Priyadarshan     | B Tech | 2021           | MALE   | 1006        | 2001    |
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT s.name, f.employee_name FROM STUDENT s, FACULTY f
+    -> WHERE s.advisor = f.employee_ID;
++--------------------+-----------------+
+| name               | employee_name   |
++--------------------+-----------------+
+| Prerit Agrawal     | Dr. S K Majhi   |
+| Gobinda Panda      | Dr. S Behera    |
+| Nikunj Agrawal     | Prof. M R Kabat |
+| Jyotiprakash Panda | Dr. R Mohanty   |
+| S Priyadarshan     | Prof. A K Rath  |
++--------------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 1006), ("BCS05002", "Computer Arch", 3, 1006), ("BCS05003", "Database Management", 3, 1006), ("BCSPE501", "Computer Graphics", 3, 1006), ("BCSPE601", "Compiler Design", 3, 1006);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM course;
++-----------+---------------------+---------+-------------+
+| course_ID | course_name         | credits | dept_number |
++-----------+---------------------+---------+-------------+
+| BCS05001  | Operating Systems   |       3 | 1006        |
+| BCS05002  | Computer Arch       |       3 | 1006        |
+| BCS05003  | Database Management |       3 | 1006        |
+| BCSPE501  | Computer Graphics   |       3 | 1006        |
+| BCSPE601  | Compiler Design     |       3 | 1006        |
++-----------+---------------------+---------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT ORDER BY name DESC;
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+| roll_number | name               | degree | admission_year | gender | dept_number | advisor |
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+| 2102040005  | S Priyadarshan     | B Tech | 2021           | MALE   | 1006        | 2001    |
+| 2102040001  | Prerit Agrawal     | B Tech | 2021           | MALE   | 1006        | 2006    |
+| 2102040003  | Nikunj Agrawal     | B Tech | 2021           | MALE   | 1006        | 2002    |
+| 2102040004  | Jyotiprakash Panda | B Tech | 2021           | MALE   | 1006        | 2003    |
+| 2102040002  | Gobinda Panda      | B Tech | 2021           | MALE   | 1006        | 2008    |
++-------------+--------------------+--------+----------------+--------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM FACULTY;
++----------+
+| COUNT(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT SUM(budget) FROM DEPARTMENT;
++-------------+
+| SUM(budget) |
++-------------+
+|    36000000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT MIN(date_joined) FROM FACULTY;
++------------------+
+| MIN(date_joined) |
++------------------+
+| 2001-09-01       |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE budget > (SELECT AVG(budget) FROM DEPARTMENT);
++------------------------------+
+| dept_name                    |
++------------------------------+
+| Civil Engineering            |
+| Electronics & Telecom. Engg. |
++------------------------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT * FROM DEPARTMENT WHERE BUDGET BETWEEN 7000000 AND 8000000;
++---------+------------------------------+-----------+-------------+---------+-----------------+
+| dept_ID | dept_name                    | estd_year | building_no | budget  | HOD             |
++---------+------------------------------+-----------+-------------+---------+-----------------+
+| 1006    | Comp Sc. & Engg.             | 1990      | CS200       | 7000000 | Dr. S Panigrahi |
+| 1009    | Electronics & Telecom. Engg. | 1998      | D-200       | 8000000 | Prof. H K Sahoo |
++---------+------------------------------+-----------+-------------+---------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN (1002, 1006);
++----------------------+
+| dept_name            |
++----------------------+
+| Chemical Engineering |
+| Comp Sc. & Engg.     |
++----------------------+
+2 rows in set (0.00 sec)
+
+
+

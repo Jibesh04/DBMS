@@ -1,0 +1,250 @@
+	Enter password: *****
+	Welcome to the MySQL monitor.  Commands end with ; or \g.
+	Your MySQL connection id is 8
+	Server version: 8.0.30 MySQL Community Server - GPL
+
+	Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+	
+	Oracle is a registered trademark of Oracle Corporation and/or its
+	affiliates. Other names may be trademarks of their respective
+	owners.
+	
+	Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+	
+	mysql> show databases;
+	+--------------------+
+	| Database           |
+	+--------------------+
+	| avinash_62         |
+	| bank               |
+	| class              |
+	| cse2102040024      |
+	| cse2102100026      |
+	| dabasetext         |
+	| db_aryan           |
+	| information_schema |
+	| mysql              |
+	| performance_schema |
+	| pravati            |
+	| purna              |
+	| rishi              |
+	| sakila             |
+	| sys                |
+	| test               |
+	| world              |
+	+--------------------+
+	17 rows in set (0.18 sec)
+
+mysql> USE cse2102040024
+Database changed
+mysql> CREATE TABLE DEPARTMENT(
+    ->  dept_ID VARCHAR(10),
+    ->  dept_name VARCHAR(30),
+    ->  estd_year CHAR(4),
+    ->  building_no VARCHAR(5),
+    ->  budget INT,
+    ->  HOD VARCHAR(20),
+    ->  PRIMARY KEY (dept_ID)
+    -> );
+Query OK, 0 rows affected (0.98 sec)
+
+mysql> desc DEPARTMENT;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| dept_ID     | varchar(10) | NO   | PRI | NULL    |       |
+| dept_name   | varchar(30) | YES  |     | NULL    |       |
+| estd_year   | char(4)     | YES  |     | NULL    |       |
+| building_no | varchar(5)  | YES  |     | NULL    |       |
+| budget      | int         | YES  |     | NULL    |       |
+| HOD         | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.09 sec)
+
+mysql> CREATE TABLE FACULTY(
+    ->  employee_ID VARCHAR(10),
+    ->  employee_name VARCHAR(20),
+    ->  gender  VARCHAR(10),
+    ->  date_joined DATE,
+    ->  dept_number VARCHAR(10),
+    ->  phone_number VARCHAR(15),
+    ->  email_ID VARCHAR(40),
+    ->  PRIMARY KEY (employee_ID),
+    ->  FOREIGN KEY (dept_number) REFERENCES DEPARTMENT(dept_ID)
+    -> );
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc FACULTY;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| employee_ID   | varchar(10) | NO   | PRI | NULL    |       |
+| employee_name | varchar(20) | YES  |     | NULL    |       |
+| gender        | varchar(10) | YES  |     | NULL    |       |
+| date_joined   | date        | YES  |     | NULL    |       |
+| dept_number   | varchar(10) | YES  | MUL | NULL    |       |
+| phone_number  | varchar(15) | YES  |     | NULL    |       |
+| email_ID      | varchar(40) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DROP TABLE STUDENT;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_cse2102040024 |
++-------------------------+
+| department              |
+| faculty                 |
++-------------------------+
+2 rows in set (0.05 sec)
+
+mysql> CREATE TABLE STUDENT(
+    ->  roll_number VARCHAR(10),
+    ->  name VARCHAR(20),
+    ->  degree VARCHAR(20),
+    ->  admission_year CHAR(4),
+    ->  gender VARCHAR(10),
+
+    	->  dept_no VARCHAR(10),
+
+    ->  dept_number VARCHAR(10),
+    ->  mentor VARCHAR(10),
+    ->  PRIMARY KEY (roll_number),
+
+    	->  FOREIGN KEY (dept_no) REFERENCES DEPARTMENT(dept_ID),
+
+    ->  FOREIGN KEY (dept_number) REFERENCES DEPARTMENT(dept_ID),
+    ->  FOREIGN KEY (mentor) REFERENCES FACULTY(employee_ID)
+    -> );
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc STUDENT;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| roll_number    | varchar(10) | NO   | PRI | NULL    |       |
+| name           | varchar(20) | YES  |     | NULL    |       |
+| degree         | varchar(20) | YES  |     | NULL    |       |
+| admission_year | char(4)     | YES  |     | NULL    |       |
+| gender         | varchar(10) | YES  |     | NULL    |       |
+
+	| dept_no        | varchar(10) | YES  | MUL | NULL    |       |
+
+| dept_number        | varchar(10) | YES  | MUL | NULL    |       |
+| mentor         | varchar(10) | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSE(
+    ->  course_ID VARCHAR(10),
+    ->  course_name VARCHAR(20),
+    ->  credits DECIMAL,
+    ->  dept_number VARCHAR(10),
+    ->  PRIMARY KEY (course_ID),
+    ->  FOREIGN KEY (dept_number) REFERENCES DEPARTMENT(dept_ID)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> desc COURSE;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| course_ID   | varchar(10)   | NO   | PRI | NULL    |       |
+| course_name | varchar(20)   | YES  |     | NULL    |       |
+| credits     | decimal(10,0) | YES  |     | NULL    |       |
+| dept_number | varchar(10)   | YES  | MUL | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE ENROLLMENT(
+    ->  roll_number VARCHAR(10),
+    ->  course_ID VARCHAR(10),
+    ->  semester VARCHAR(10),
+    ->  year VARCHAR(10),
+    ->  grade DECIMAL
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc ENROLLMENT;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| roll_number | varchar(10)   | YES  |     | NULL    |       |
+| course_ID   | varchar(10)   | YES  |     | NULL    |       |
+| semester    | varchar(10)   | YES  |     | NULL    |       |
+| year        | varchar(10)   | YES  |     | NULL    |       |
+| grade       | decimal(10,0) | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TEACHING(
+    ->  employee_ID VARCHAR(10),
+    ->  course_ID VARCHAR(10),
+    ->  semester VARCHAR(10),
+    ->  year VARCHAR(10),
+    ->  classroom VARCHAR(5)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc TEACHING;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| employee_ID | varchar(10) | YES  |     | NULL    |       |
+| course_ID   | varchar(10) | YES  |     | NULL    |       |
+| semester    | varchar(10) | YES  |     | NULL    |       |
+| year        | varchar(10) | YES  |     | NULL    |       |
+| classroom   | varchar(5)  | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PREREQUISITE(
+    ->  prereq_course VARCHAR(20),
+    ->  course_ID VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc PREREQUISITE;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| prereq_course | varchar(20) | YES  |     | NULL    |       |
+| course_ID     | varchar(10) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_cse2102040024 |
++-------------------------+
+| course                  |
+| department              |
+| enrollment              |
+| faculty                 |
+| prerequisite            |
+| student                 |
+| teaching                |
++-------------------------+
+7 rows in set (0.00 sec)
+
+	mysql> ALTER TABLE STUDENT CHANGE COLUMN dept_no dept_number VARCHAR(10);
+	Query OK, 0 rows affected (0.11 sec)
+	Records: 0  Duplicates: 0  Warnings: 0
+
+	mysql> desc STUDENT;
+	+----------------+-------------+------+-----+---------+-------+
+	| Field          | Type        | Null | Key | Default | Extra |
+	+----------------+-------------+------+-----+---------+-------+
+	| roll_number    | varchar(10) | NO   | PRI | NULL    |       |
+	| name           | varchar(20) | YES  |     | NULL    |       |
+	| degree         | varchar(20) | YES  |     | NULL    |       |
+	| admission_year | char(4)     | YES  |     | NULL    |       |
+	| gender         | varchar(10) | YES  |     | NULL    |       |
+	| dept_number    | varchar(10) | YES  | MUL | NULL    |       |
+	| mentor         | varchar(10) | YES  | MUL | NULL    |       |
+	+----------------+-------------+------+-----+---------+-------+
+	7 rows in set (0.00 sec)
+
+mysql>

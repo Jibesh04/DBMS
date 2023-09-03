@@ -1,0 +1,119 @@
+import java.sql.*;
+import java.util.Scanner;
+
+class makeConnection{
+    public static void main(String args[]){
+        System.out.println("Hello, World!");
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cse2102040024";
+            String username = "root";
+            String password = "vssut";
+            Connection con = DriverManager.getConnection(url, username, password);
+            if(con.isClosed()){
+                System.out.println("Connection is closed!");
+            }
+            else{
+                System.out.println("Connection is made..");
+            }
+            Statement stmt = con.createStatement();
+	    System.out.println("CREATING TABLE STUDENTS...");
+	    int n = stmt.executeUpdate("CREATE TABLE students(regd CHAR(10), name VARCHAR(30), branch VARCHAR(40), section VARCHAR(5), PRIMARY KEY(regd))");
+            System.out.println(n + " rows affected");
+	    
+	    String regd, name, branch, section;
+            int flag = 1, n = 0;
+
+            Scanner input = new Scanner(System.in);
+
+            while(flag == 1){
+                try{
+                    System.out.print("Enter Roll Number: ");
+                    if(n > 0)
+                        regd = input.nextLine();
+                    regd = input.nextLine();
+                    System.out.print("Enter Name: ");
+                    name = input.nextLine();
+                    System.out.print("Enter Branch: ");
+                    branch = input.nextLine();
+                    System.out.print("Enter Section: ");
+                    section = input.nextLine();
+                    n += stmt.executeUpdate("INSERT INTO students VALUES (\"" + regd  + "\", \"" + name + "\", \"" + branch + "\", \"" + section + "\")");
+                    System.out.println("Press \t1 to insert another row\n\t0 if insertion is completed");
+                    flag = input.nextInt();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            if (n > 0){
+                System.out.println(n + " rows inserted");
+		System.out.println("DATA RETRIEVED FROM TABLE STUDENTS");
+            }
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+            while(rs.next()){
+                System.out.println("ROLLNO:\t" + rs.getString(1) + "\n\tNAME:\t\t" + rs.getString(2) + "\n\tBRANCH:\t\t" + rs.getString(3) + "\n\tSECTION:\t" + rs.getString(4));
+            }
+
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+C:\Users\Student\Desktop\cse2102040024>javac makeConnection.java
+
+C:\Users\Student\Desktop\cse2102040024>java -cp ".;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..
+CREATING TABLE STUDENTS...
+0 rows affected
+Enter Roll Number: 2102040030
+Enter Name: Tanmaya Kumar Naik
+Enter Branch: Computer Science & Engineering
+Enter Section: D1
+Press   1 to insert another row
+        0 if insertion is completed
+1
+Enter Roll Number: 2102040026
+Enter Name: Basant Xalxo
+Enter Branch: Computer Science & Engineering
+Enter Section: D1
+Press   1 to insert another row
+        0 if insertion is completed
+0
+2 rows inserted
+DATA RETRIEVED FROM TABLE STUDENTS
+ROLLNO: 2102040026
+        NAME:           Basant Xalxo
+        BRANCH:         Computer Science & Engineering
+        SECTION:                D1
+ROLLNO: 2102040030
+        NAME:           Tanmaya Kumar Naik
+        BRANCH:         Computer Science & Engineering
+        SECTION:                D1
+
+
+MYSQL
+mysql> desc students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regd    | char(10)    | NO   | PRI | NULL    |       |
+| name    | varchar(30) | YES  |     | NULL    |       |
+| branch  | varchar(40) | YES  |     | NULL    |       |
+| section | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students;
++------------+--------------------+--------------------------------+---------+
+| regd       | name               | branch                         | section |
++------------+--------------------+--------------------------------+---------+
+| 2102040026 | Basant Xalxo       | Computer Science & Engineering | D1      |
+| 2102040030 | Tanmaya Kumar Naik | Computer Science & Engineering | D1      |
++------------+--------------------+--------------------------------+---------+
+2 rows in set (0.00 sec)

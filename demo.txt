@@ -1,0 +1,312 @@
+mysql> SELECT s.name, d.dept_name, f.employee_name FROM STUDENT s, DEPARTMENT d, FACULTY f
+    -> WHERE s.dept_number = d.dept_ID AND s.mentor = f.emploee_ID;
+ERROR 1054 (42S22): Unknown column 'f.emploee_ID' in 'where clause'
+mysql> WHERE s.dept_number = d.dept_ID AND s.mentor = f.employee_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.dept_number = d.dept_ID AND s.mentor = f.employee_ID' at line 1
+mysql> WHERE s.dept_number = d.dept_ID WHERE s.mentor = f.employee_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.dept_number = d.dept_ID WHERE s.mentor = f.employee_ID' at line 1
+mysql> WHERE s.dept_number = d.dept_ID, s.mentor = f.employee_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.dept_number = d.dept_ID, s.mentor = f.employee_ID' at line 1
+mysql> SELECT s.name, f.employee_name FROM STUDENT s, FACULTY f
+    -> WHERE s.mentor = f.employee_ID;
++--------------------+-----------------+
+| name               | employee_name   |
++--------------------+-----------------+
+| Prerit Agrawal     | Dr. R Mohanty   |
+| Gobinda Panda      | Prof. M R Kabat |
+| Nikunj Agrawal     | Dr. S Panigrahi |
+| Jyotiprakash Panda | Prof. A K Rath  |
++--------------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc COURSE;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| course_ID   | varchar(10)   | NO   | PRI | NULL    |       |
+| course_name | varchar(20)   | YES  |     | NULL    |       |
+| credits     | decimal(10,0) | YES  |     | NULL    |       |
+| dept_number | varchar(10)   | YES  | MUL | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 6), ("BCS05002", "Computer Architecture", 3, 6), ("BCS05003", "Database Management System", 3, 6), ()
+    ->
+    -> ;
+ERROR 1136 (21S01): Column count doesn't match value count at row 4
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 6), ("BCS05002", "Computer Architecture", 3, 6), ("BCS05003", "Database Management System", 3, 6);
+ERROR 1406 (22001): Data too long for column 'course_name' at row 2
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 6), ("BCS05002", "Computer Architecture", 3, 6), ("BCS05003", "Database Management Sys", 3, 6);
+ERROR 1406 (22001): Data too long for column 'course_name' at row 2
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 6), ("BCS05002", "Computer Arch", 3, 6), ("BCS05003", "Database Management Sys", 3, 6);
+ERROR 1406 (22001): Data too long for column 'course_name' at row 3
+mysql> INSERT INTO COURSE VALUES("BCS05001", "Operating Systems", 3, 6), ("BCS05002", "Computer Arch", 3, 6), ("BCS05003", "Database Management", 3, 6);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COURSE;
++-----------+---------------------+---------+-------------+
+| course_ID | course_name         | credits | dept_number |
++-----------+---------------------+---------+-------------+
+| BCS05001  | Operating Systems   |       3 | 6           |
+| BCS05002  | Computer Arch       |       3 | 6           |
+| BCS05003  | Database Management |       3 | 6           |
++-----------+---------------------+---------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT ORDER BY name DESC;
++-------------+--------------------+--------+----------------+--------+-------------+--------+
+| roll_number | name               | degree | admission_year | gender | dept_number | mentor |
++-------------+--------------------+--------+----------------+--------+-------------+--------+
+| 2102040001  | Prerit Agrawal     | B Tech | 2021           | MALE   | 6           | 3      |
+| 2102040003  | Nikunj Agrawal     | B Tech | 2021           | MALE   | 6           | 4      |
+| 2102040004  | Jyotiprakash Panda | B Tech | 2021           | MALE   | 6           | 1      |
+| 2102040002  | Gobinda Panda      | B Tech | 2021           | MALE   | 6           | 2      |
++-------------+--------------------+--------+----------------+--------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM FACULTY;
++----------+
+| COUNT(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.06 sec)
+
+mysql> SELECT COUNT(dept_number) FROM FACULTY;
++--------------------+
+| COUNT(dept_number) |
++--------------------+
+|                  4 |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> COUNT (*) FROM FACULTY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COUNT (*) FROM FACULTY' at line 1
+mysql> COUNT(*) FROM FACULTY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COUNT(*) FROM FACULTY' at line 1
+mysql> SELECT COUNT(dept_number) FROM FACULTY;
++--------------------+
+| COUNT(dept_number) |
++--------------------+
+|                  4 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(budget) FROM DEPARTMENT;
++-------------+
+| SUM(budget) |
++-------------+
+|    90000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(dept_name) FROM DEPARTMENT;
++----------------+
+| SUM(dept_name) |
++----------------+
+|              0 |
++----------------+
+1 row in set, 16 warnings (0.02 sec)
+
+mysql> SELECT SUM(dept_ID) FROM DEPARTMENT;
++--------------+
+| SUM(dept_ID) |
++--------------+
+|          136 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(date_joined) FROM FACULTY;
++------------------+
+| SUM(date_joined) |
++------------------+
+|         80293218 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVERAGE(date_joined) FROM FACULTY;
+ERROR 1305 (42000): FUNCTION cse2102040024.AVERAGE does not exist
+mysql> SELECT AVG(date_joined) FROM FACULTY;
++------------------+
+| AVG(date_joined) |
++------------------+
+|    20073304.5000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(date_joined) FROM FACULTY;
++------------------+
+| MIN(date_joined) |
++------------------+
+| 2001-09-01       |
++------------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT MAX(date_joined) FROM FACULTY;
++------------------+
+| MAX(date_joined) |
++------------------+
+| 2014-07-11       |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(employee_name) FROM FACULTY;
++--------------------+
+| MIN(employee_name) |
++--------------------+
+| Dr. R Mohanty      |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(employee_name) FROM FACULTY;
++--------------------+
+| MAX(employee_name) |
++--------------------+
+| Prof. M R Kabat    |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT avg(employee_name) FROM FACULTY;
++--------------------+
+| avg(employee_name) |
++--------------------+
+|                  0 |
++--------------------+
+1 row in set, 4 warnings (0.00 sec)
+
+mysql> SELECT employee_name FROM FACULTY WHERE date_joined = MIN(date_joined);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT employee_name FROM FACULTY WHERE date_joined = SELECT MIN(date_joined) FROM FACULTY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT MIN(date_joined) FROM FACULTY' at line 1
+mysql> SELECT employee_name FROM FACULTY WHERE date_joined = MIN(date_joined) FROM FACULTY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM FACULTY' at line 1
+mysql> SELECT dept_name FROM DEPARTMENT WHERE budget > AVG(budget);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT dept_name FROM DEPARTMENT WHERE budget > SELECT AVG(budget) FROM DEPARTMENT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT AVG(budget) FROM DEPARTMENT' at line 1
+mysql> SELECT dept_name FROM DEPARTMENT WHERE budget > (SELECT AVG(budget) FROM DEPARTMENT);
++------------------------------+
+| dept_name                    |
++------------------------------+
+| Mechanical Engg.             |
+| Chemical Engineering         |
+| Civil Engineering            |
+| Comp Sc. & Engg.             |
+| Electrical Engg.             |
+| Electronics & Telecom. Engg. |
++------------------------------+
+6 rows in set (0.03 sec)
+
+mysql> SELECT employee_name FROM FACULTY WHERE date_joined = (SELECT MIN(date_joined) FROM FACULTY);
++---------------+
+| employee_name |
++---------------+
+| Dr. R Mohanty |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE budget >= (SELECT AVG(budget) FROM DEPARTMENT);
++------------------------------+
+| dept_name                    |
++------------------------------+
+| Mechanical Engg.             |
+| Chemical Engineering         |
+| Civil Engineering            |
+| Comp Sc. & Engg.             |
+| Electrical Engg.             |
+| Electronics & Telecom. Engg. |
++------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT AVG(budget) FROM DEPARTMENT;
++--------------+
+| AVG(budget)  |
++--------------+
+| 5625000.0000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name STARTS WITH 'c';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'STARTS WITH 'c'' at line 1
+mysql> SELECT * FROM DEPARTMENT WHERE BUDGET BETWEEN 2000000, 4000000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 4000000' at line 1
+mysql> SELECT * FROM DEPARTMENT WHERE BUDGET BETWEEN (2000000, 4000000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT * FROM DEPARTMENT WHERE BUDGET BETWEEN 2000000 AND 4000000;
++---------+--------------------------------+-----------+-------------+---------+-------------------+
+| dept_ID | dept_name                      | estd_year | building_no | budget  | HOD               |
++---------+--------------------------------+-----------+-------------+---------+-------------------+
+| 10      | Humanities                     | 1975      | C-200       | 2000000 | Dr. J Paramaguru  |
+| 11      | Information Technology         | 2003      | CS200       | 4000000 | Dr. P K Sahu      |
+| 12      | Mathematics                    | 1970      | CD100       | 3000000 | Dr. M K Jena      |
+| 14      | Metallurgical Materials Engg.  | 2015      | CD300       | 4000000 | Prof. S K Badjena |
+| 16      | Production Engineering         | 2013      | D-200       | 3000000 | Dr. A K Rout      |
+| 3       | Chemistry                      | 1995      | B-100       | 4000000 | Prof. P Mohapatra |
+| 8       | Electrical & Electronics Engg. | 2010      | B-200       | 4000000 | Dr. S Behera      |
++---------+--------------------------------+-----------+-------------+---------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name LIKE 'c';
+Empty set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name LIKE 'C';
+Empty set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name LIKE 'Comp';
+Empty set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name LIKE 'Computer ';
+Empty set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_name LIKE 'Computer';
+Empty set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3' at line 1
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN (3, 5);
++----------------------+
+| dept_name            |
++----------------------+
+| Chemistry            |
+| Computer Application |
++----------------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT * FROM DEPARTMENT
+    -> ;
++---------+--------------------------------+-----------+-------------+----------+-------------------+
+| dept_ID | dept_name                      | estd_year | building_no | budget   | HOD               |
++---------+--------------------------------+-----------+-------------+----------+-------------------+
+| 1       | Architecture                   | 1980      | D-300       |  5000000 | Dr. B Mohapatra   |
+| 10      | Humanities                     | 1975      | C-200       |  2000000 | Dr. J Paramaguru  |
+| 11      | Information Technology         | 2003      | CS200       |  4000000 | Dr. P K Sahu      |
+| 12      | Mathematics                    | 1970      | CD100       |  3000000 | Dr. M K Jena      |
+| 13      | Mechanical Engg.               | 1960      | CE200       | 10000000 | Dr. S Panda       |
+| 14      | Metallurgical Materials Engg.  | 2015      | CD300       |  4000000 | Prof. S K Badjena |
+| 15      | Physics                        | 1985      | CD100       |  5000000 | Prof. G Nath      |
+| 16      | Production Engineering         | 2013      | D-200       |  3000000 | Dr. A K Rout      |
+| 2       | Chemical Engineering           | 2000      | A-300       |  6000000 | Dr. P C Jena      |
+| 3       | Chemistry                      | 1995      | B-100       |  4000000 | Prof. P Mohapatra |
+| 4       | Civil Engineering              | 1960      | CE300       | 10000000 | Prof. R R Dash    |
+| 5       | Computer Application           | 2005      | CS100       |  5000000 | Dr. S Das         |
+| 6       | Comp Sc. & Engg.               | 1990      | CS200       |  7000000 | Dr. S Panigrahi   |
+| 7       | Electrical Engg.               | 1960      | D-100       | 10000000 | Dr. P Ray         |
+| 8       | Electrical & Electronics Engg. | 2010      | B-200       |  4000000 | Dr. S Behera      |
+| 9       | Electronics & Telecom. Engg.   | 1998      | D-200       |  8000000 | Prof. H K Sahoo   |
++---------+--------------------------------+-----------+-------------+----------+-------------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN (SELECT dept_name FROM (SELECT f.employee_name, d.dept_ID FROM FACULTY f, DEPARTMENT d));
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN (SELECT dept_name FROM (SELECT f.employee_name, d.dept_name FROM FACULTY f, DEPARTMENT d WHERE f.dept_number = d.dept_ID));
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT dept_name FROM DEPARTMENT WHERE dept_ID IN (SELECT dept_name FROM (SELECT d.dept_name FROM FACULTY f, DEPARTMENT d WHERE f.dept_number = d.dept_ID));
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql>                                                                                                                                                                  
+
+
+
+
+
+

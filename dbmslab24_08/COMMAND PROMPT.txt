@@ -1,0 +1,37 @@
+Microsoft Windows [Version 10.0.19043.1889]
+(c) Microsoft Corporation. All rights reserved.
+
+CUsersStudentcd Desktopcse2102040024
+
+CUsersStudentDesktopcse2102040024javac makeConnection.java
+'javac' is not recognized as an internal or external command,
+operable program or batch file.
+
+CUsersStudentDesktopcse2102040024set path=CProgram FilesJavajdk-9.0.4bin
+
+CUsersStudentDesktopcse2102040024javac makeConnection.java
+
+CUsersStudentDesktopcse2102040024java -cp CUsersStudentDesktopcse2102040024;CUsersStudentDownloadsmysql-connector-j-8.1.0 makeConnection
+Code chal rha bhai
+java.lang.ClassNotFoundException com.mysql.cj.jdbc.Driver
+        at java.basejdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java582)
+        at java.basejdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java185)
+        at java.basejava.lang.ClassLoader.loadClass(ClassLoader.java496)
+        at java.basejava.lang.Class.forName0(Native Method)
+        at java.basejava.lang.Class.forName(Class.java292)
+        at makeConnection.main(makeConnection.java7)
+
+C:\Users\Student\Desktop\cse2102040024>java -cp "C:\Users\Student\Desktop\cse2102040024;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Connection is made..
+
+C:\Users\Student\Desktop\cse2102040024>javac makeConnection.java
+
+C:\Users\Student\Desktop\cse2102040024>java -cp "C:\Users\Student\Desktop\cse2102040024;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..
+
+C:\Users\Student\Desktop\cse2102040024>java -cp ".;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..

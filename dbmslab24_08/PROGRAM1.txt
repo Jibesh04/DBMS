@@ -1,0 +1,125 @@
+import java.sql.*;
+
+class makeConnection{
+    public static void main(String args[]){
+        System.out.println("Hello, World!");
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cse2102040024";
+            String username = "root";
+            String password = "vssut";
+            Connection con = DriverManager.getConnection(url, username, password);
+            if(con.isClosed()){
+                System.out.println("Connection is closed!");
+            }
+            else{
+                System.out.println("Connection is made..");
+            }
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM student");
+		// stmt.executeQuery() - set of rows ---- returns ResultSet object (CREATE)
+		// also stmt.executeUpdate() - this many rows are updated ---- returns an integer (INSERT)
+            while(rs.next()){
+                System.out.println("ROLLNO:\t" + rs.getString(1) + "\n\tNAME:\t\t" + rs.getString(2) + "\n\tDEGREE:\t\t" + rs.getString(3) + "\n\tADMISSION YEAR:\t" + rs.getString(4) + "\n\tGENDER:\t\t" + rs.getString(5) + "\n\tDEPARTMENT NO.:\t" + rs.getString(6) + "\n\tMENTOR:\t\t" + rs.getString(7) + "\n");
+            }
+
+	    // ----------------- RUN1
+            // ResultSet rs = stmt.executeQuery("SELECT * FROM student");
+            /*while(rs.next()){
+                System.out.println("ROLLNO:\t" + rs.getString(1) + "\n\tNAME:\t\t" + rs.getString(2) + "\n\tDEGREE:\t\t" + rs.getString(3) + "\n\tADMISSION YEAR:\t" + rs.getString(4) + "\n\tGENDER:\t\t" + rs.getString(5) + "\n\tDEPARTMENT NO.:\t" + rs.getString(6) + "\n\tMENTOR:\t\t" + rs.getString(7) + "\n");
+            }*/
+
+            // ----------------- RUN2
+            // int n = stmt.executeUpdate("CREATE TABLE computer(c_id VARCHAR(15), memory VARCHAR(10), storage VARCHAR(10), os VARCHAR(15), PRIMARY KEY (c_id))");
+            // System.out.println(n + " rows affected");
+            
+
+	    // con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+
+1st run
+
+C:\Users\Student\Desktop\cse2102040024>javac makeConnection.java
+
+C:\Users\Student\Desktop\cse2102040024>java -cp ".;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..
+ROLLNO: 2102040001
+        NAME:           Prerit Agrawal
+        DEGREE:         B Tech
+        ADMISSION YEAR: 2021
+        GENDER:         MALE
+        DEPARTMENT NO.: 6
+        MENTOR:         3
+
+ROLLNO: 2102040002
+        NAME:           Gobinda Panda
+        DEGREE:         B Tech
+        ADMISSION YEAR: 2021
+        GENDER:         MALE
+        DEPARTMENT NO.: 6
+        MENTOR:         2
+
+ROLLNO: 2102040003
+        NAME:           Nikunj Agrawal
+        DEGREE:         B Tech
+        ADMISSION YEAR: 2021
+        GENDER:         MALE
+        DEPARTMENT NO.: 6
+        MENTOR:         4
+
+ROLLNO: 2102040004
+        NAME:           Jyotiprakash Panda
+        DEGREE:         B Tech
+        ADMISSION YEAR: 2021
+        GENDER:         MALE
+        DEPARTMENT NO.: 6
+        MENTOR:         1
+
+
+2nd run
+
+C:\Users\Student\Desktop\cse2102040024>javac makeConnection.java
+
+C:\Users\Student\Desktop\cse2102040024>java -cp ".;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..
+0 rows affected
+
+3rd run
+
+C:\Users\Student\Desktop\cse2102040024>javac makeConnection.java
+
+C:\Users\Student\Desktop\cse2102040024>java -cp ".;C:\Users\Student\Downloads\mysql-connector-j-8.1.0\mysql-connector-j-8.1.0.jar" makeConnection
+Hello, World!
+Connection is made..
+2 rows affected
+
+// Write a JAVA code that asks user attribute values and inserts, asks whether you want to insert another row or not: 0 / 1: 1 insert another row, 0 will show the table
+
+mysql> create table students(
+    -> regd CHAR(10),
+    -> name VARCHAR(30),
+    -> branch VARCHAR(40),
+    -> section VARCHAR(5),
+    -> PRIMARY KEY(regd)
+    -> );
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> desc students
+    -> ;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regd    | char(10)    | NO   | PRI | NULL    |       |
+| name    | varchar(30) | YES  |     | NULL    |       |
+| branch  | varchar(40) | YES  |     | NULL    |       |
+| section | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+

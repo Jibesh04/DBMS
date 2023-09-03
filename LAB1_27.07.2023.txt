@@ -1,0 +1,65 @@
+mysql> CREATE DATABASE cse2102040024;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE cse2102040024;
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> CREATE TABLE STUDENT(
+    ->  REGDNO VARCHAR(10) NOT NULL,
+    ->  NAME VARCHAR(20) NOT NULL,
+    ->  DEPARTMENT VARCHAR(3) NOT NULL,
+    ->  AGE INT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_cse2102040024 |
++-------------------------+
+| student                 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES("2102040024", "Jibesh Kumar Panda", "CSE", 19);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO STUDENT VALUES("2102040023", "Jyotiraditya Biswal", "CSE", 20), ("2102041050", "Ramakanta Sahoo", "CSE", 20);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> desc STUDENT;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| REGDNO     | varchar(10) | NO   |     | NULL    |       |
+| NAME       | varchar(20) | NO   |     | NULL    |       |
+| DEPARTMENT | varchar(3)  | NO   |     | NULL    |       |
+| AGE        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM STUDENT;
++------------+---------------------+------------+-----+
+| REGDNO     | NAME                | DEPARTMENT | AGE |
++------------+---------------------+------------+-----+
+| 2102040024 | Jibesh Kumar Panda  | CSE        |  19 |
+| 2102040023 | Jyotiraditya Biswal | CSE        |  20 |
+| 2102041050 | Ramakanta Sahoo     | CSE        |  20 |
++------------+---------------------+------------+-----+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT DROP COLUMN AGE;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++------------+---------------------+------------+
+| REGDNO     | NAME                | DEPARTMENT |
++------------+---------------------+------------+
+| 2102040024 | Jibesh Kumar Panda  | CSE        |
+| 2102040023 | Jyotiraditya Biswal | CSE        |
+| 2102041050 | Ramakanta Sahoo     | CSE        |
++------------+---------------------+------------+
+3 rows in set (0.00 sec)
